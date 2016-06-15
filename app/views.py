@@ -50,3 +50,7 @@ def logout():
     logout_user()
     user =  current_user
     return redirect(url_for('login'))
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html',user=g.user)
