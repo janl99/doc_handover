@@ -3,7 +3,7 @@ from flask import render_template,redirect,session,url_for,request,g,flash
 from flask.ext.login import login_user,logout_user,current_user,login_required
 from app import db,lm 
 from models import User,ROLE_USER,ROLE_ADMIN
-from forms import LoginForm
+from forms import LoginForm,UserEditForm
 
 @lm.user_loader
 def load_user(id):
@@ -27,18 +27,13 @@ def login():
         return redirect(flask.url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        print form.username.data
-        print form.password.data
         user = User.query.filter_by(nickname = form.username.data ).first()
         if user is None and form.user.data == "janl" :
             user = User(nickname="janl",password = "123456",email="janl@163.com",role = ROLE_ADMIN)
             db.session.add(user)
             db.session.commit()
             return render_template('login.html')
-
         if user is not None:
-            print user.nickname
-            print user.password
             if user.password == form.password.data:
                 login_user(user)
                 flash('logined in successfully.')
@@ -51,6 +46,18 @@ def logout():
     user =  current_user
     return redirect(url_for('login'))
 
-@app.route('/profile')
+@app.route('/profile',methods =['GET','POST'])
+@login_required
 def profile():
-    return render_template('profile.html',user=g.user)
+    userform = UserEditForm()
+    print userform
+    if userform.validate_on_submit():
+        print userform.email.data
+        print userform.dynamic.data
+        print userform.about_me.data
+        g.user.email = userform.email.data
+        g.user.dynamic = userform.dynamic.data
+        g.user.about_me = userform.about_me.data
+        db.session.add(g.user)
+        db.session.commit()
+    return render_template('profile.html',user=g.user,userform=userform)

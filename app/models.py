@@ -9,6 +9,10 @@ class User(db.Model):
     email = db.Column(db.String(120),index = True, unique = True)
     role = db.Column(db.SmallInteger,default = ROLE_USER)
     password = db.Column(db.String(128))
+    about_me = db.Column(db.String(256))
+    avatar = db.Column(db.String(128))
+    dynamic = db.Column(db.String(64))
+    last_seen = db.Column(db.DateTime)
 
     @property
     def is_authenticated(self):
