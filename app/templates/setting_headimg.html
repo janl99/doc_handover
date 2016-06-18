@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang = "zh">
+    <head>
+        <!--S-meta-->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="keywords" content="keyword,keyword,keyword,keyword,keyword" />
+        <meta name="description" itemprop="description" content="page description"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!--E-meta-->
+        <title>genral data tool</title>
+        <!--S-css-->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <!-- Toastr style -->
+        <link href="/static/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+        <!-- Gritter -->
+        <link href="/static/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+        <link href="/static/css/animate.css" rel="stylesheet">
+        <link href="/static/css/style.css" rel="stylesheet">
+        <link href="/static/css/plugins/cropper/cropper.min.css" rel="stylesheet">
+        <!--E-css-->
+        <!--S-javascript-->
+        <!-- Mainly scripts -->
+        <script src="/static/js/jquery-2.1.1.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <!-- Custom and plugin javascript -->
+        <script src="/static/js/inspinia.js"></script>
+        <script src="/static/js/plugins/pace/pace.min.js"></script>
+        <!-- Image cropper -->
+        <script src="/static/js/plugins/cropper/cropper.js"></script>
+        <!--E-javascript-->
+    </head>
+    <body>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title  back-change">
+                            <h5>Image cropper <small>http://fengyuanchen.github.io/cropper/</small></h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <p>
+                            A simple jQuery image cropping plugin.
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="image-crop">
+                                        <img src="/static/img/p3.jpg">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Preview image</h4>
+                                    <div class="img-preview img-preview-sm"></div>
+                                    <h4>Comon method</h4>
+                                    <p>
+                                    You can upload new image to crop container and easy download new cropped image.
+                                    </p>
+                                    <div class="btn-group">
+                                        <label title="Upload image file" for="inputImage" class="btn btn-primary">
+                                            <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
+                                            Upload new image
+                                        </label>
+                                        <label title="Donload image" id="download" class="btn btn-primary">Download</label>
+                                    </div>
+                                    <h4>Other method</h4>
+                                    <p>
+                                    You may set cropper options with <code>$(image}).cropper(options)</code>
+                                    </p>
+                                    <div class="btn-group">
+                                        <button class="btn btn-white" id="zoomIn" type="button">Zoom In</button>
+                                        <button class="btn btn-white" id="zoomOut" type="button">Zoom Out</button>
+                                        <button class="btn btn-white" id="rotateLeft" type="button">Rotate Left</button>
+                                        <button class="btn btn-white" id="rotateRight" type="button">Rotate Right</button>
+                                        <button class="btn btn-warning" id="setDrag" type="button">New crop</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        <script>
+        $(document).ready(function(){
+
+            var $image = $(".image-crop > img")
+            $($image).cropper({
+                aspectRatio: 1,
+                preview: ".img-preview",
+                done: function(data) {
+                    // Output the result data for cropping image.
+
+                }
+            });
+
+            var $inputImage = $("#inputImage");
+            if (window.FileReader) {
+                $inputImage.change(function() {
+                    var fileReader = new FileReader(),
+                            files = this.files,
+                            file;
+
+                    if (!files.length) {
+                        return;
+                    }
+
+                    file = files[0];
+
+                    if (/^image\/\w+$/.test(file.type)) {
+                        fileReader.readAsDataURL(file);
+                        fileReader.onload = function () {
+                            $inputImage.val("");
+                            $image.cropper("reset", true).cropper("replace", this.result);
+                        };
+                    } else {
+                        showMessage("Please choose an image file.");
+                    }
+                });
+            } else {
+                $inputImage.addClass("hide");
+            }
+
+            $("#download").click(function() {
+                window.open($image.cropper("getDataURL"));
+            });
+
+            $("#zoomIn").click(function() {
+                $image.cropper("zoom", 0.1);
+            });
+
+            $("#zoomOut").click(function() {
+                $image.cropper("zoom", -0.1);
+            });
+
+            $("#rotateLeft").click(function() {
+                $image.cropper("rotate", 45);
+            });
+
+            $("#rotateRight").click(function() {
+                $image.cropper("rotate", -45);
+            });
+
+            $("#setDrag").click(function() {
+                $image.cropper("setDragMode", "crop");
+            });
+
+        });
+    </script>
+   </body>
+
+</html>
