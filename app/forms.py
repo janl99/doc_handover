@@ -1,5 +1,7 @@
+# -*- code:utf-8 -*-
+
 from flask.ext.wtf import Form
-from wtforms import TextField,BooleanField,StringField,TextAreaField,PasswordField
+from wtforms import TextField,BooleanField,StringField,TextAreaField,PasswordField,FileField
 from wtforms.validators import Required,Email,Length,EqualTo
 
 class LoginForm(Form):
@@ -15,3 +17,6 @@ class ChangePasswordForm(Form):
     password = PasswordField('password',validators=[Required()])
     newpassword = PasswordField('newpassword',validators=[Required(),Length(min=6,max=12)])
     confimpassword = PasswordField('confimpassword',validators=[Required(),Length(min=6,max=12),EqualTo('newpassword',message='password must be same.')])
+
+class HeadimgForm(Form):
+    img = FileField('img',validators=[Required()])

@@ -3,7 +3,7 @@ from flask import render_template,redirect,session,url_for,request,g,flash
 from flask.ext.login import login_user,logout_user,current_user,login_required
 from app import db,lm 
 from models import User,ROLE_USER,ROLE_ADMIN
-from forms import LoginForm,UserEditForm,ChangePasswordForm
+from forms import LoginForm,UserEditForm,ChangePasswordForm,HeadimgForm
 from hashlib import md5
 
 '''S-flask-login'''
@@ -114,5 +114,13 @@ def changepassword():
 @app.route('/setting_headimg',methods=['GET','POST'])
 @login_required
 def setting_headimg():
-    return render_template('setting_headimg.html',user=g.user)
+    print "setting_headimg_post"
+    form = HeadimgForm()
+    if form.validate_on_submit():
+        print form.img.data 
+    return render_template('setting_headimg.html',user=g.user,form=form)
 '''E-setting_headimg'''
+
+
+
+
