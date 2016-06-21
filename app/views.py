@@ -5,6 +5,9 @@ from app import db,lm
 from models import User,ROLE_USER,ROLE_ADMIN
 from forms import LoginForm,UserEditForm,ChangePasswordForm,HeadimgForm
 from hashlib import md5
+from config import UPLOAD_AVATAR,basedir
+import os,io
+import base64
 
 '''S-flask-login'''
 @lm.user_loader
@@ -117,7 +120,24 @@ def setting_headimg():
     print "setting_headimg_post"
     form = HeadimgForm()
     if form.validate_on_submit():
-        print form.img.data 
+        #print form.headimg.data 
+        fn = os.path.join(UPLOAD_AVATAR,str(g.user.id) +'-123456.png')
+        print fn
+        index = form.headimg.data.index(',')
+        print index
+        l = len(form.headimg.data)
+        data = form.headimg.data[index+1:l]
+        f = io.open(fn,'wb') 
+        f.write(data.decode('base64'))
+        f.close()
+
+        lb = len(basedir)
+        lfn = len(fn)
+        imgpath = fn[lb:lfn]
+        print imgpath
+        g.user.avatar = imgpath
+        db.session.add(g.user)
+        db.session.commit()
     return render_template('setting_headimg.html',user=g.user,form=form)
 '''E-setting_headimg'''
 

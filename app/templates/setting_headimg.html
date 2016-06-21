@@ -85,8 +85,8 @@
                             </div>
                             <form action="" id = "form_upload" method ="post" enctype="multipart/form-data">
                                 {{form.hidden_tag()}} 
-                                {{form.img(type="file",class ="form-control")}}
-                                <input type="submit" value = "upload" class="btn upload_point btn-primary" style="display:none;">
+                                {{form.headimg(class ="form-control")}}
+                                <input type="submit" value = "upload" class="btn upload_point btn-primary" >
                             </form>
                         </div>
                     </div>
@@ -136,13 +136,14 @@
             $("#download").click(function() {
                 //window.open($image.cropper("getDataURL"));
                 var data = $image.cropper("getDataURL");
-                alert(data);
-                $("#download").ajaxSubmit({
-                        url:"/setting_headimg",
-                        type:"post",
-                        dataType:"text",
-                        data:{"getDataURL":data}
-                });
+                //alert(data);
+                $("#headimg")[0].value = data
+                //$("#form_upload")[0].ajaxSubmit({
+                //        url:"/setting_headimg",
+                //        type:"post",
+                //        dataType:"text",
+                //        data:{"getDataURL":data}
+                //});
             });
 
             $("#zoomIn").click(function() {

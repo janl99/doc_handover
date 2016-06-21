@@ -19,4 +19,4 @@ class ChangePasswordForm(Form):
     confimpassword = PasswordField('confimpassword',validators=[Required(),Length(min=6,max=12),EqualTo('newpassword',message='password must be same.')])
 
 class HeadimgForm(Form):
-    img = FileField('img',validators=[Required()])
+    headimg = TextField('headimg',validators=[Required()])

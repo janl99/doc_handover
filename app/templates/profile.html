@@ -84,8 +84,12 @@
                     </h2>
                     <small> {% if user.dynamic %} {{user.dynamic}} {% else %}Founder of Groupeq{% endif%}</small>
                 </div>
+                {% if user.avatar %}
+                <img src="{{user.avatar}}" class="img-circle circle-border m-b-md" alt="profile">
+                {% else %}
                 <img src="/static/img/a4.jpg" class="img-circle circle-border m-b-md" alt="profile">
-                <div>
+                {% endif %}
+                                <div>
                     <span>100 Tweets</span> |
                     <span>350 Following</span> |
                     <span>610 Followers</span>
