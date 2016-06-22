@@ -121,7 +121,7 @@ def setting_headimg():
     form = HeadimgForm()
     if form.validate_on_submit():
         #print form.headimg.data 
-        fn = os.path.join(UPLOAD_AVATAR,str(g.user.id) +'-123456.png')
+        fn = os.path.join(UPLOAD_AVATAR,str(g.user.id) +'-avatar.png')
         print fn
         index = form.headimg.data.index(',')
         print index
