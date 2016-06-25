@@ -5,7 +5,7 @@ from app import db,lm
 from models import User,ROLE_USER,ROLE_ADMIN
 from forms import LoginForm,UserEditForm,ChangePasswordForm,HeadimgForm
 from hashlib import md5
-from config import UPLOAD_AVATAR,basedir
+from config import UPLOAD_AVATAR,APP_FOLDER
 import os,io
 import base64
 
@@ -131,13 +131,14 @@ def setting_headimg():
         f.write(data.decode('base64'))
         f.close()
 
-        lb = len(basedir)
+        lb = len(APP_FOLDER)
         lfn = len(fn)
         imgpath = fn[lb:lfn]
         print imgpath
         g.user.avatar = imgpath
         db.session.add(g.user)
         db.session.commit()
+        return redirect(url_for('profile'))
     return render_template('setting_headimg.html',user=g.user,form=form)
 '''E-setting_headimg'''
 

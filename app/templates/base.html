@@ -38,11 +38,15 @@
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
+                            {% if user.avatar %}
+                            <img alt="avatar" class="img-circle" style="width:64px;height:64px;" src="{{user.avatar}}">
+                            {% else %}
                             <img alt="image" class="img-circle" src="/static/img/profile_small.jpg" />
+                            {% endif %}
                         </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{% if not user.is_authenticated %}David Williams{% else %} {{user.nickname}} {% endif %}</strong>
-                        </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
+                        </span> <span class="text-muted text-xs block">{% if user.dynamic %}{{user.dynamic}}{% else %}Art Director{% endif %} <b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="/profile">Profile</a></li>
                             <li><a href="contacts.html">Contacts</a></li>

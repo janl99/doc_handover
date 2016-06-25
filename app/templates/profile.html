@@ -19,7 +19,11 @@
     <div class="row m-b-lg m-t-lg">
         <div class="col-md-6">
             <div class="profile-image">
+                {% if user.avatar %}
+                <img src="{{user.avatar}}" class="img-circle circle-border m-b-md" alt="profile">
+                {% else %}
                 <img src="/static/img/a4.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                {% endif %}
             </div>
             <div class="profile-info">
                 <div class="">
@@ -85,9 +89,9 @@
                     <small> {% if user.dynamic %} {{user.dynamic}} {% else %}Founder of Groupeq{% endif%}</small>
                 </div>
                 {% if user.avatar %}
-                <img src="{{user.avatar}}" class="img-circle circle-border m-b-md" alt="profile">
+                <img src="{{user.avatar}}" class="img-circle circle-border m-b-md" style="width:96px;height:96px;" alt="profile">
                 {% else %}
-                <img src="/static/img/a4.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                <img src="/static/img/a4.jpg" class="img-circle circle-border m-b-md" style="width:96px;height:96px;" alt="profile">
                 {% endif %}
                                 <div>
                     <span>100 Tweets</span> |
@@ -101,7 +105,7 @@
                 <div class="text-right">
                     <a class="btn btn-xs btn-primary" href = "/useredit"><i class="fa fa-pencil-square-o"></i> Edit User</a>
                     <a class="btn btn-xs btn-primary" href = "/changepassword" ><i class="fa fa-key"></i> Change Password</a>
-                    <a class="btn btn-xs btn-primary" href = "/setting_headimg" data-toggle="modal" data-target="#myModal5"><i class="fa fa-user"></i>HeadImg</a>
+                    <a class="btn btn-xs btn-primary" href = "/setting_headimg" ><i class="fa fa-user"></i>Setting Avatar</a>
                 </div>
             </div>
         </div>
